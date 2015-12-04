@@ -1,1 +1,2 @@
 # shuffle
+Shuffle a Collection
