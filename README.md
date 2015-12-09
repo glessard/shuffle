@@ -1,6 +1,8 @@
 # Shuffle
 
-Shuffle a Collection as lazily as possible, via a `PermutationGenerator`: the collection is copied, but not mutated.
+Adds a `shuffle()` method to any implementor of `CollectionType`.
+
+Shuffle a Collection as lazily as possible, via a `PermutationGenerator`: the collection is copied, but not mutated. In most cases, this should be a 
 
 The collection's indices are copied to an array, which in turn gets shuffled.
 
