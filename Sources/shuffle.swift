@@ -93,16 +93,16 @@ public struct ShuffledSequence<C: CollectionType>: SequenceType, GeneratorType
 
 public struct IndexShuffler<I: ForwardIndexType>: SequenceType, GeneratorType
 {
-  let count: Int
-  var step = -1
-  var i: [I]
+  public let count: Int
+  public private(set) var step = -1
+  private var i: [I]
 
-  init<S: SequenceType where S.Generator.Element == I>(_ input: S)
+  public init<S: SequenceType where S.Generator.Element == I>(_ input: S)
   {
     self.init(Array(input))
   }
 
-  init(_ input: Array<I>)
+  public init(_ input: Array<I>)
   {
     i = input
     count = input.count
@@ -116,11 +116,11 @@ public struct IndexShuffler<I: ForwardIndexType>: SequenceType, GeneratorType
     if step < count
     {
       // select a random Index from the rest of the array
-      #if os(Linux)
+#if os(Linux)
       let j = step + Int(random() % (count-step))
-      #else
+#else
       let j = step + Int(arc4random_uniform(UInt32(count-step)))
-      #endif
+#endif
 
       // swap that Index with the Index present at the current step in the array
       if j != step // swap 2beta6 calls `fatalError` if the two items are identical.
