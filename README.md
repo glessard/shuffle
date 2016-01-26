@@ -36,4 +36,4 @@ print(sums)
 
 Also adds a mutating `shuffleInPlace()` method to implementors of `MutableCollectionType`.
 `shuffleInPlace()` shuffles the whole collection at once, trying to minimize memory usage.
-For a the collection whose `Index` is `Int` (such an `Array`), no extra memory will be allocated.
+For a the collection whose `Index` is an integer type (such an `Array`), no extra memory will be allocated.

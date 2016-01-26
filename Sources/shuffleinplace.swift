@@ -11,19 +11,20 @@ import Glibc
 import func Darwin.C.stdlib.arc4random_uniform
 #endif
 
-extension MutableCollectionType where Self.Index == Int
+extension MutableCollectionType where Self.Index: SignedIntegerType
 {
   mutating public func shuffleInPlace()
   {
     var index = startIndex
     let count = endIndex - index
 
-    while index < endIndex
+    while index != endIndex
     {
 #if os(Linux)
-      let j = index + Int(random() % (count-index)) // with slight modulo bias
+      // with slight modulo bias
+      let j = index + numericCast(random() % numericCast(count-index))
 #else
-      let j = index + Int(arc4random_uniform(UInt32(count-index)))
+      let j = index + numericCast(arc4random_uniform(numericCast(count-index)))
 #endif
 
       if index != j
@@ -31,7 +32,33 @@ extension MutableCollectionType where Self.Index == Int
         (self[index], self[j]) = (self[j], self[index])
       }
 
-      index += 1
+      index = index.successor()
+    }
+  }
+}
+
+extension MutableCollectionType where Self.Index: UnsignedIntegerType
+{
+  mutating public func shuffleInPlace()
+  {
+    var index = startIndex
+    let count = endIndex - index
+
+    while index != endIndex
+    {
+#if os(Linux)
+      // with slight modulo bias
+      let j = index + numericCast(random() % numericCast(count-index))
+#else
+      let j = index + numericCast(arc4random_uniform(numericCast(count-index)))
+#endif
+
+      if index != j
+      {
+        (self[index], self[j]) = (self[j], self[index])
+      }
+
+      index = index.successor()
     }
   }
 }
