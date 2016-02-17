@@ -6,7 +6,7 @@
 //
 
 #if os(Linux)
-import Glibc
+import func Glibc.random
 #else
 import func Darwin.C.stdlib.arc4random_uniform
 #endif
