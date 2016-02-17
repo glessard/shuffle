@@ -34,6 +34,6 @@ for total in stats
 print(sums)
 ```
 
-Also adds a mutating `shuffleInPlace()` method to implementors of `MutableCollectionType`.
-`shuffleInPlace()` shuffles the whole collection at once, trying to minimize memory usage.
+Also adds a mutating `shuffle()` method to implementors of `MutableCollectionType`.
+`shuffle()` shuffles the whole collection at once, trying to minimize memory usage.
 For a the collection whose `Index` is an integer type (such an `Array`), no extra memory will be allocated.
