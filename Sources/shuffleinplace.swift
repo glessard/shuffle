@@ -13,7 +13,7 @@ import func Darwin.C.stdlib.arc4random_uniform
 
 extension MutableCollectionType where Self.Index: SignedIntegerType
 {
-  mutating public func shuffleInPlace()
+  mutating public func shuffle()
   {
     var index = startIndex
     let count = endIndex - index
@@ -39,7 +39,7 @@ extension MutableCollectionType where Self.Index: SignedIntegerType
 
 extension MutableCollectionType where Self.Index: UnsignedIntegerType
 {
-  mutating public func shuffleInPlace()
+  mutating public func shuffle()
   {
     var index = startIndex
     let count = endIndex - index
@@ -65,7 +65,7 @@ extension MutableCollectionType where Self.Index: UnsignedIntegerType
 
 extension MutableCollectionType
 {
-  mutating public func shuffleInPlace()
+  mutating public func shuffle()
   {
     for (i, j) in zip(indices, IndexShuffler(indices))
     {
