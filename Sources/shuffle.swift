@@ -67,7 +67,7 @@ public struct ShuffledSequence<C: CollectionType>: SequenceType, GeneratorType
     {
       // select a random Index from the rest of the array
 #if os(Linux)
-      let j = step + Int(random() % (count-step))
+      let j = step + Int(random() % (count-step)) // with slight modulo bias
 #else
       let j = step + Int(arc4random_uniform(UInt32(count-step)))
 #endif
@@ -78,7 +78,7 @@ public struct ShuffledSequence<C: CollectionType>: SequenceType, GeneratorType
         swap(&i[j], &i[step])
       }
 
-      // return the new random Index.
+      // return the new random Element.
       return collection[i[step]]
     }
 
@@ -117,7 +117,7 @@ public struct IndexShuffler<I: ForwardIndexType>: SequenceType, GeneratorType
     {
       // select a random Index from the rest of the array
 #if os(Linux)
-      let j = step + Int(random() % (count-step))
+      let j = step + Int(random() % (count-step)) // with slight modulo bias
 #else
       let j = step + Int(arc4random_uniform(UInt32(count-step)))
 #endif
