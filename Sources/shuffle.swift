@@ -2,7 +2,7 @@
 //  shuffle.swift
 //
 //  Created by Guillaume Lessard on 2014-08-28.
-//  Copyright (c) 2014 Guillaume Lessard. All rights reserved.
+//  Copyright (c) 2016 Guillaume Lessard. All rights reserved.
 //
 //  https://github.com/glessard/shuffle
 //  https://gist.github.com/glessard/7140fe885af3eb874e11

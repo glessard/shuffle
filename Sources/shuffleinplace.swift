@@ -2,7 +2,7 @@
 //  shuffleinplace.swift
 //
 //  Created by Guillaume Lessard on 2014-08-28.
-//  Copyright (c) 2014 Guillaume Lessard. All rights reserved.
+//  Copyright (c) 2016 Guillaume Lessard. All rights reserved.
 //
 
 #if os(Linux)
