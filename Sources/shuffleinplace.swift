@@ -15,50 +15,24 @@ extension MutableCollectionType where Self.Index: SignedIntegerType
 {
   mutating public func shuffle()
   {
-    var index = startIndex
-    let count = endIndex - index
+    var step = startIndex
+    let last = endIndex
 
-    while index != endIndex
+    while step < last
     {
 #if os(Linux)
       // with slight modulo bias
-      let j = index + numericCast(random() % numericCast(count-index))
+      let j = step + numericCast(random() % numericCast(last-step))
 #else
-      let j = index + numericCast(arc4random_uniform(numericCast(count-index)))
+      let j = step + numericCast(arc4random_uniform(numericCast(last-step)))
 #endif
 
-      if index != j
+      if step != j
       {
-        (self[index], self[j]) = (self[j], self[index])
+        (self[step], self[j]) = (self[j], self[step])
       }
 
-      index = index.successor()
-    }
-  }
-}
-
-extension MutableCollectionType where Self.Index: UnsignedIntegerType
-{
-  mutating public func shuffle()
-  {
-    var index = startIndex
-    let count = endIndex - index
-
-    while index != endIndex
-    {
-#if os(Linux)
-      // with slight modulo bias
-      let j = index + numericCast(random() % numericCast(count-index))
-#else
-      let j = index + numericCast(arc4random_uniform(numericCast(count-index)))
-#endif
-
-      if index != j
-      {
-        (self[index], self[j]) = (self[j], self[index])
-      }
-
-      index = index.successor()
+      step = step.successor()
     }
   }
 }
@@ -67,7 +41,7 @@ extension MutableCollectionType
 {
   mutating public func shuffle()
   {
-    for (i, j) in zip(indices, IndexShuffler(indices))
+    for (i, j) in zip(indices, IndexShuffler(indices)) where i != j
     {
       (self[j], self[i]) = (self[i], self[j])
     }
