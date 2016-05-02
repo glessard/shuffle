@@ -20,12 +20,12 @@ import func Darwin.C.stdlib.arc4random_uniform
 /// - parameter c: The collection to be shuffled
 /// - returns: A sequence of of `c`'s elements, lazily shuffled.
 
-public func shuffle<C: CollectionType>(c: C) -> ShuffledSequence<C>
+public func shuffle<C: Collection>(_ c: C) -> ShuffledSequence<C>
 {
   return ShuffledSequence(c)
 }
 
-public extension CollectionType
+public extension Collection
 {
   /// Get a sequence/generator that will return a collection's elements in a random order.
   /// The input collection is not modified.
@@ -43,7 +43,7 @@ public extension CollectionType
 /// The input collection is not modified: the shuffling itself is done
 /// using an adjunct array of indices.
 
-public struct ShuffledSequence<C: CollectionType>: SequenceType, GeneratorType
+public struct ShuffledSequence<C: Collection>: Sequence, IteratorProtocol
 {
   public let collection: C
   public let last: Int
@@ -59,7 +59,7 @@ public struct ShuffledSequence<C: CollectionType>: SequenceType, GeneratorType
     last = i.endIndex
   }
 
-  public mutating func next() -> C.Generator.Element?
+  public mutating func next() -> C.Iterator.Element?
   {
     if step < last
     {
@@ -95,13 +95,13 @@ public struct ShuffledSequence<C: CollectionType>: SequenceType, GeneratorType
 /// using a sequence of indices for the input. Elements (indices) from
 /// the input sequence are returned in a random order until exhaustion.
 
-public struct IndexShuffler<Index: ForwardIndexType>: SequenceType, GeneratorType
+public struct IndexShuffler<Index: ForwardIndex>: Sequence, IteratorProtocol
 {
   public let last: Int
   public private(set) var step: Int
   private var i: [Index]
 
-  public init<S: SequenceType where S.Generator.Element == Index>(_ input: S)
+  public init<S: Sequence where S.Iterator.Element == Index>(_ input: S)
   {
     self.init(Array(input))
   }
