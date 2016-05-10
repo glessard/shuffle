@@ -32,7 +32,7 @@ extension MutableCollection where Self.Index: SignedInteger
         (self[step], self[j]) = (self[j], self[step])
       }
 
-      step = step.successor()
+      step = self.index(after: step)
     }
   }
 }
