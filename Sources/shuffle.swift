@@ -63,9 +63,8 @@ public struct ShuffledSequence<C: Collection where C.Indices.Iterator.Element ==
     return nil
   }
 
-  public func underestimateCount() -> Int
-  {
-    return shuffler.underestimateCount()
+  public var underestimatedCount: Int {
+    return shuffler.underestimatedCount
   }
 }
 
@@ -117,8 +116,7 @@ public struct IndexShuffler<Index>: Sequence, IteratorProtocol
     return nil
   }
 
-  public func underestimateCount() -> Int
-  {
+  public var underestimatedCount: Int {
     return (last - step)
   }
 }
