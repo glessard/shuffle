@@ -37,13 +37,13 @@ extension MutableCollection where Self.Index: SignedInteger
   }
 }
 
-extension MutableCollection
-{
-  mutating public func shuffle()
-  {
-    for (i, j) in zip(indices, IndexShuffler(indices)) where i != j
-    {
-      (self[j], self[i]) = (self[i], self[j])
-    }
-  }
-}
+//extension MutableCollection
+//{
+//  mutating public func shuffle()
+//  {
+//    for (i, j) in zip(indices, IndexShuffler(indices)) where i != j
+//    {
+//      (self[j], self[i]) = (self[i], self[j])
+//    }
+//  }
+//}
