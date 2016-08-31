@@ -11,7 +11,7 @@ import func Glibc.random
 import func Darwin.C.stdlib.arc4random_uniform
 #endif
 
-extension MutableCollectionType where Self.Index: SignedIntegerType
+extension MutableCollection where Self.Index: SignedInteger
 {
   mutating public func shuffle()
   {
@@ -32,18 +32,19 @@ extension MutableCollectionType where Self.Index: SignedIntegerType
         (self[step], self[j]) = (self[j], self[step])
       }
 
-      step = step.successor()
+      step = self.index(after: step)
     }
   }
 }
 
-extension MutableCollectionType
-{
-  mutating public func shuffle()
-  {
-    for (i, j) in zip(indices, IndexShuffler(indices)) where i != j
-    {
-      (self[j], self[i]) = (self[i], self[j])
-    }
-  }
-}
+//extension MutableCollection
+//  where Self.Index == Self.Indices.Iterator.Element
+//{
+//  mutating public func shuffle()
+//  {
+//    for (i, j) in zip(indices, IndexShuffler(indices)) where i != j
+//    {
+//      (self[j], self[i]) = (self[i], self[j])
+//    }
+//  }
+//}
