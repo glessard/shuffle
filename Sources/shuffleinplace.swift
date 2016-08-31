@@ -38,6 +38,7 @@ extension MutableCollection where Self.Index: SignedInteger
 }
 
 //extension MutableCollection
+//  where Self.Index == Self.Indices.Iterator.Element
 //{
 //  mutating public func shuffle()
 //  {
