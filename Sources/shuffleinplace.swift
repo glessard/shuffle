@@ -29,7 +29,8 @@ extension MutableCollection where Self.Index: SignedInteger
 
       if step != j
       {
-        (self[step], self[j]) = (self[j], self[step])
+        swap(&self[step], &self[j])
+        // (self[step], self[j]) = (self[j], self[step])
       }
 
       step = self.index(after: step)
