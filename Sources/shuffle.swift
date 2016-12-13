@@ -14,16 +14,6 @@ import func Glibc.random
 import func Darwin.C.stdlib.arc4random_uniform
 #endif
 
-/// Get a sequence/generator that will return a collection's elements in a random order.
-/// The input collection is not modified.
-///
-/// - parameter c: The collection to be shuffled
-/// - returns: A sequence of of `c`'s elements, lazily shuffled.
-
-public func shuffle<C: Collection>(_ c: C) -> ShuffledSequence<C>
-{
-  return ShuffledSequence(c)
-}
 
 public extension Collection where Self.Indices.Iterator.Element == Self.Index
 {
