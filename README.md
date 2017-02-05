@@ -1,4 +1,4 @@
-# Shuffle
+# Shuffle [![Build Status](https://travis-ci.org/glessard/shuffle.svg?branch=master)](https://travis-ci.org/glessard/shuffle)
 
 Adds a `shuffled()` method to any implementor of `CollectionType`.
 
