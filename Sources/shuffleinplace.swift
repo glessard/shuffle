@@ -20,6 +20,7 @@ extension MutableCollection
 
     while step < last
     {
+      // select a random Index from the rest of the array
 #if os(Linux)
       // with slight modulo bias
       let offset = random() % numericCast(distance(from: step, to: last))
@@ -28,6 +29,7 @@ extension MutableCollection
 #endif
       let j = index(step, offsetBy: numericCast(offset))
 
+      // swap the element at the random Index with the element at the current step
       if step != j
       {
         swap(&self[step], &self[j])
