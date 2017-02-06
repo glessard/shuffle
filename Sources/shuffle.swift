@@ -89,10 +89,11 @@ public struct IndexShuffler<Index>: Sequence, IteratorProtocol
     {
       // select a random Index from the rest of the array
 #if os(Linux)
-      let j = step + Int(random() % (last-step)) // with slight modulo bias
+      let offset = random() % i.distance(from: step, to: last) // with slight modulo bias
 #else
-      let j = step + Int(arc4random_uniform(UInt32(last-step)))
+      let offset = arc4random_uniform(UInt32(i.distance(from: step, to: last)))
 #endif
+      let j = i.index(step, offsetBy: Int(offset))
 
       // swap that Index with the Index present at the current step in the array
       if j != step
@@ -100,7 +101,7 @@ public struct IndexShuffler<Index>: Sequence, IteratorProtocol
         swap(&i[j], &i[step])
       }
 
-      defer { step += 1 }
+      defer { step = i.index(after: step) }
       // return the new random Index.
       return i[step]
     }
