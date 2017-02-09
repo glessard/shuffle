@@ -1,5 +1,5 @@
 import XCTest
-@testable import shuffleTests
+@testable import ShuffleTests
 
 XCTMain([
      testCase(FunctionalityTests.allTests),
