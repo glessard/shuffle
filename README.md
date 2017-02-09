@@ -1,14 +1,16 @@
 # Shuffle [![Build Status](https://travis-ci.org/glessard/shuffle.svg?branch=master)](https://travis-ci.org/glessard/shuffle)
 
-Adds a `shuffled()` method to any implementor of `CollectionType`.
+Adds a `shuffled()` method to any implementor of `Collection`.
 
-Shuffle a Collection as lazily as possible: the collection is not mutated.
+It shuffles the Collection as lazily as possible, without mutating the collection.
 The collection's indices are copied to an array, which in turn gets shuffled.
 
-This allows the input collection to be indexed only; in general this minimizes memory allocation, for in any case where the size of `Element` is greater than the size of `Index` (most of the time).
+This allows the input collection to be indexed only. In general this should minimize memory allocation, for example in cases where the size of `Element` is greater than the size of `Index`.
 
 Example:
 ```
+import Shuffle
+
 let a = Array(0...4)
 
 var stats = Array<Array<Int>>(count: a.count, repeatedValue: Array(count: a.count, repeatedValue: 0))
@@ -34,6 +36,5 @@ for total in stats
 print(sums)
 ```
 
-Also adds a mutating `shuffle()` method to implementors of `MutableCollectionType`.
+The package also adds a mutating `shuffle()` method to implementors of `MutableCollection`.
 `shuffle()` shuffles the whole collection at once, trying to minimize memory usage.
-For a the collection whose `Index` is an integer type (such an `Array`), no extra memory will be allocated.

@@ -9,7 +9,7 @@
 import Foundation
 import XCTest
 
-import shuffle
+import Shuffle
 
 class FunctionalityTests: XCTestCase
 {
