@@ -15,6 +15,20 @@ import func Darwin.C.stdlib.arc4random_uniform
 #endif
 
 
+#if swift(>=3.2)
+public extension Collection
+{
+  /// Get a sequence/generator that will return a collection's elements in a random order.
+  /// The input collection is not modified.
+  ///
+  /// - returns: A sequence of of `self`'s elements, lazily shuffled.
+
+  public func shuffled() -> ShuffledSequence<Self>
+  {
+    return ShuffledSequence(self)
+  }
+}
+#else
 public extension Collection where Self.Indices.Iterator.Element == Self.Index
 {
   /// Get a sequence/generator that will return a collection's elements in a random order.
@@ -27,12 +41,38 @@ public extension Collection where Self.Indices.Iterator.Element == Self.Index
     return ShuffledSequence(self)
   }
 }
-
+#endif
 
 /// A stepwise implementation of the Knuth Shuffle (a.k.a. Fisher-Yates Shuffle).
 /// The input collection is not modified: the shuffling itself is done
 /// using an adjunct array of indices.
 
+#if swift(>=3.2)
+public struct ShuffledSequence<C: Collection>: Sequence, IteratorProtocol
+{
+  public let collection: C
+  private var shuffler: IndexShuffler<C.Index>
+
+  public init(_ input: C)
+  {
+    collection = input
+    shuffler = IndexShuffler(input.indices)
+  }
+
+  public mutating func next() -> C.Iterator.Element?
+  {
+    if let index = shuffler.next()
+    {
+      return collection[index]
+    }
+    return nil
+  }
+
+  public var underestimatedCount: Int {
+    return shuffler.underestimatedCount
+  }
+}
+#else
 public struct ShuffledSequence<C: Collection>: Sequence, IteratorProtocol
   where C.Indices.Iterator.Element == C.Index
 {
@@ -58,7 +98,7 @@ public struct ShuffledSequence<C: Collection>: Sequence, IteratorProtocol
     return shuffler.underestimatedCount
   }
 }
-
+#endif
 
 /// A stepwise (lazy-ish) implementation of the Knuth Shuffle (a.k.a. Fisher-Yates Shuffle),
 /// using a sequence of indices for the input. Elements (indices) from
@@ -98,7 +138,11 @@ public struct IndexShuffler<Index>: Sequence, IteratorProtocol
       // swap that Index with the Index present at the current step in the array
       if j != step
       {
+#if swift(>=3.2)
+        i.swapAt(j,step)
+#else
         swap(&i[j], &i[step])
+#endif
       }
 
       defer { step = i.index(after: step) }

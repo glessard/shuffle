@@ -32,7 +32,11 @@ extension MutableCollection
       // swap the element at the random Index with the element at the current step
       if step != j
       {
+#if swift(>=3.2)
+        self.swapAt(j,step)
+#else
         swap(&self[step], &self[j])
+#endif
       }
 
       step = self.index(after: step)
