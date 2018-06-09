@@ -80,7 +80,11 @@ class ShufflePerformanceTests: XCTestCase
       _ = Array(AnySequence(b))
     }
     p.deinitialize(count: a.count)
+  #if swift(>=4.1)
+    p.deallocate()
+  #else
     p.deallocate(capacity: a.count)
+  #endif
   }
 
   func testPerformanceShuffleInPlace1()
@@ -100,7 +104,11 @@ class ShufflePerformanceTests: XCTestCase
       b.shuffle()
     }
     p.deinitialize(count: a.count)
+  #if swift(>=4.1)
+    p.deallocate()
+  #else
     p.deallocate(capacity: a.count)
+  #endif
   }
 
   func testPerformanceShuffleMethod()
