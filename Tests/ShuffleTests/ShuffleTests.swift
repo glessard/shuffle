@@ -11,6 +11,36 @@ import XCTest
 
 import Shuffle
 
+class Example: XCTestCase
+{
+  func testExample()
+  {
+    let a = Array(0...4)
+
+    var stats = Array<Array<Int>>(repeating: Array(repeating: 0, count: a.count), count: a.count)
+
+    (0..<8000).forEach {
+      _ in
+      for (i,j) in a.shuffled().enumerated()  // shuffled() used here
+      {
+        stats[i][j] += 1
+      }
+    }
+
+    var sums = Array<Int>(repeating: 0, count: a.count)
+    for total in stats
+    {
+      let t = total.reduce(0, +)
+      for i in 0..<sums.count
+      {
+        sums[i] += total[i]
+      }
+      print(total, t)
+    }
+    print(sums)
+  }
+}
+
 class FunctionalityTests: XCTestCase
 {
   static var allTests: [(String, (FunctionalityTests) -> () throws -> Void)] {
