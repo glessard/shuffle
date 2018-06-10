@@ -15,6 +15,7 @@ import func Darwin.C.stdlib.arc4random_uniform
 #endif
 
 
+#if !swift(>=4.2)
 #if swift(>=3.2)
 public extension Collection
 {
@@ -41,6 +42,7 @@ public extension Collection where Self.Indices.Iterator.Element == Self.Index
     return ShuffledSequence(self)
   }
 }
+#endif
 #endif
 
 /// A stepwise implementation of the Knuth Shuffle (a.k.a. Fisher-Yates Shuffle).
