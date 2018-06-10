@@ -13,6 +13,8 @@ import Shuffle
 
 class Example: XCTestCase
 {
+  static let allTests = [ ("testExample", testExample) ]
+
   func testExample()
   {
     let a = Array(0...4)
@@ -43,12 +45,10 @@ class Example: XCTestCase
 
 class FunctionalityTests: XCTestCase
 {
-  static var allTests: [(String, (FunctionalityTests) -> () throws -> Void)] {
-    return [
-      ("testShuffle", testShuffle),
-      ("testShuffleInPlace", testShuffleInPlace),
-    ]
-  }
+  static let allTests = [
+    ("testShuffle", testShuffle),
+    ("testShuffleInPlace", testShuffleInPlace),
+  ]
 
   func testShuffle()
   {
@@ -90,16 +90,14 @@ class ShufflePerformanceTests: XCTestCase
 {
   let a = Array(stride(from: -5.0, to: 1e5, by: 0.8))
 
-  static var allTests: [(String, (ShufflePerformanceTests) -> () throws -> Void)] {
-    return [
-      ("testPerformanceControl", testPerformanceControl),
-      ("testPerformanceShuffleMethod", testPerformanceShuffleMethod),
-      ("testPerformanceShuffledSequence", testPerformanceShuffledSequence),
-      ("testPerformanceIndexShuffler", testPerformanceIndexShuffler),
-      ("testPerformanceShuffleInPlace1", testPerformanceShuffleInPlace1),
-      ("testPerformanceShuffleInPlace2", testPerformanceShuffleInPlace2),
-    ]
-  }
+  static let allTests = [
+    ("testPerformanceControl", testPerformanceControl),
+    ("testPerformanceShuffleMethod", testPerformanceShuffleMethod),
+    ("testPerformanceShuffledSequence", testPerformanceShuffledSequence),
+    ("testPerformanceIndexShuffler", testPerformanceIndexShuffler),
+    ("testPerformanceShuffleInPlace1", testPerformanceShuffleInPlace1),
+    ("testPerformanceShuffleInPlace2", testPerformanceShuffleInPlace2),
+  ]
 
   func testPerformanceControl()
   {
@@ -168,6 +166,11 @@ let source = (0..<25000).map(Double.init(_:))
 
 class LazyShufflePerformanceTests: XCTestCase
 {
+  static let allTests = [
+    ("testPerformanceEagerPrefix", testPerformanceEagerPrefix),
+    ("testPerformanceLazyPrefix", testPerformanceLazyPrefix),
+  ]
+
   func testPerformanceEagerPrefix()
   {
     let a = source
