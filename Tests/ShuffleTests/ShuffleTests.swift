@@ -28,7 +28,7 @@ class FunctionalityTests: XCTestCase
     let iterations = 1000
     for _ in 0..<iterations
     {
-      let shuffled = a.shuffled()
+      let shuffled = ShuffledSequence(a)
       Array(shuffled) == a ? (unshuffled += 1) : (unshuffled += 0)
       XCTAssert(shuffled.sorted() == a)
     }
@@ -129,6 +129,63 @@ class ShufflePerformanceTests: XCTestCase
   {
     self.measure() {
       _ = IndexShuffler(self.a.indices).map({ i in self.a[i] })
+    }
+  }
+}
+
+let prefixLength = 1000
+let source = (0..<25000).map(Double.init(_:))
+
+class LazyShufflePerformanceTests: XCTestCase
+{
+  func testPerformanceEagerPrefix()
+  {
+    let a = source
+    self.measure() {
+      let selection = Array(a.shuffled().prefix(prefixLength))
+      XCTAssert(selection.count == prefixLength)
+    }
+  }
+
+#if swift(>=4.2)
+  func testPerformanceIterativeApproach()
+  {
+    let a = source
+    self.measure() {
+      var set = Set<Double>()
+      set.reserveCapacity(prefixLength)
+      while set.count < prefixLength
+      {
+        set.insert(a.randomElement()!)
+      }
+      let selection = set.shuffled()
+      XCTAssert(selection.count == prefixLength)
+    }
+  }
+
+  func testPerformanceIndirectIteration()
+  {
+    let a = source
+    self.measure() {
+      var set = Set<Int>()
+      set.reserveCapacity(prefixLength)
+      let indices = a.indices
+      while set.count < prefixLength
+      {
+        set.insert(indices.randomElement()!)
+      }
+      let selection = set.map({ a[$0] }).shuffled()
+      XCTAssert(selection.count == prefixLength)
+    }
+  }
+#endif
+
+  func testPerformanceLazyPrefix()
+  {
+    let a = source
+    self.measure() {
+      let selection = Array(ShuffledSequence(a).prefix(prefixLength))
+      XCTAssert(selection.count == prefixLength)
     }
   }
 }

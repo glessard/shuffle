@@ -5,6 +5,7 @@
 //  Copyright (c) 2016 Guillaume Lessard. All rights reserved.
 //
 
+#if !swift(>=4.2)
 #if os(Linux)
 import func Glibc.random
 #else
@@ -43,3 +44,4 @@ extension MutableCollection
     }
   }
 }
+#endif
