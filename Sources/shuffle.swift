@@ -130,12 +130,16 @@ public struct IndexShuffler<Index>: Sequence, IteratorProtocol
     if step < last
     {
       // select a random Index from the rest of the array
+#if swift(>=4.2)
+      let j = Int.random(in: step..<last)
+#else
 #if os(Linux)
       let offset = random() % i.distance(from: step, to: last) // with slight modulo bias
 #else
       let offset = arc4random_uniform(UInt32(i.distance(from: step, to: last)))
 #endif
       let j = i.index(step, offsetBy: Int(offset))
+#endif
 
       // swap that Index with the Index present at the current step in the array
       if j != step
